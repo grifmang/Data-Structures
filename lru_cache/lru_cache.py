@@ -8,6 +8,7 @@ class LRUCache(DoublyLinkedList):
     can hold, the current number of nodes it is holding, a doubly-linked list that holds the key-value entries in the correct order, as well as a storage dict that provides fast access to every node stored in the cache.
     """
     def __init__(self, limit=10):
+        # Inherit DLL stuffs
         super().__init__()
         self.limit = limit
         self.cache = {}
@@ -21,13 +22,16 @@ class LRUCache(DoublyLinkedList):
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
+        # If key not in cache, just return
         if self.cache.get(key) is None:
             return
         else:
+            # If key in cache, set the node to node
             node = self.cache[key]
-            val = node.value
+            # Move it to the front
             self.move_to_front(node)
-            return val[key]
+            # Return the value
+            return node.value[key]
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -40,12 +44,20 @@ class LRUCache(DoublyLinkedList):
     the newly-specified value.
     """
     def set(self, key, value):
+        # Check if key is in cache
         if self.cache.get(key) is None:
+            # If not in storage, check if length is greater or equal to limit
             if self.length >= self.limit:
+                # If so, remove the last element
                 del self.cache[list(self.remove_from_tail())[0]]
+            # Add new node to front
             self.add_to_head({key:value})
+            # Set head to new node
             self.cache[key] = self.head
         else:
+            # If in storage, set node to node in cache
             node = self.cache[key]
+            # Update node with new key:value
             node.value.update({key:value})
+            # Move it to the front
             self.move_to_front(node)
