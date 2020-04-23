@@ -10,26 +10,6 @@ class BinarySearchTree:
         self.left = None
         self.right = None
 
-    # Insert the given value into the tree
-    # recursive `insert` implementation
-    # does not return anything when executed
-    # THIS WILL NOT WORK :) 
-    #   def insert(self, value):
-    #     # base case: we found a parking spot!
-    #     # we're in an empty spot in the tree 
-    #     if self is None:
-    #         self = BinarySearchTreeNode(value)
-    #     # if we aren't at the base case, move towards it 
-    #     else:
-    #         # self is a node with a value 
-    #         # compare the value to the value at this node 
-    #         if value < self.value:
-    #             # move to the left
-    #             self.left.insert(value)
-    #         # otherwise, value >= self.value
-    #         else:
-    #             self.right.insert(value)
-
     def insert(self, value):
         # self.left and/or self.right need to be valid nodes 
         # for us to call `insert` on them 
@@ -73,13 +53,12 @@ class BinarySearchTree:
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
-        while True:
-            cb(self.value)
-            while(self.right):
-                return cb(self.value)
-            while(self.left):
-                return cb(self.value)
-            break
+        cb(self.value)
+        if self.right:
+            self.right.for_each(cb)
+        if self.left:
+            self.left.for_each(cb)
+        
 
     # DAY 2 Project -----------------------
 
