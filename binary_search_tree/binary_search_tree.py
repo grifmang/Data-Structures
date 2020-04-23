@@ -1,8 +1,8 @@
-import sys
-sys.path.append('../queue_and_stack')
-from dll_queue import Queue
-from dll_stack import Stack
-
+# import sys
+# sys.path.append('../queue_and_stack')
+# from dll_queue import Queue
+# from dll_stack import Stack
+from collections import deque
 
 class BinarySearchTree:
     def __init__(self, value):
@@ -66,17 +66,44 @@ class BinarySearchTree:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        if not node.left:
+            print(node.value)
+        else:
+            self.in_order_print(node.left)
+            print(node.value)
+        if node.right:
+            self.in_order_print(node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        # queue
+        q = deque()
+        q.append(node)
+        
+        while len(q) > 0:
+            current = q.popleft()
+            if current.left:
+                q.append(current.left)
+            if current.right:
+                q.append(current.right)
+            print(current.value)
+            
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        # stack
+        stack = []
+        stack.append(node)
+
+        while len(stack) > 0:
+            current = stack.pop()
+            if current.right:
+                stack.append(current.right)
+            if current.left:
+                stack.append(current.left)
+            print(current.value)
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
